@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: core-services-deployment
+  labels:
+    app: pastebin-core-services
+spec:
+  replicas : 2
+  selector:
+    matchLabels:
+      app: pastebin-core-services
+  template:
+    metadata:
+      name: core-services-pod
+      labels:
+        app: pastebin-core-services
+    spec:
+      containers:
+        - name: pastebin-core-services-container
+          image: sreedevisasikumar/pastebin:core-services-latest
+          ports:
+            - containerPort: 8080
