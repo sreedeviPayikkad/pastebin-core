@@ -19,10 +19,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1")
-@Slf4j // TODO: JJ - logger use lombok, constructor based injection
+@Slf4j
 public class PasteController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PasteController.class);
+
     private static final String DATA = "data";
     private final KeyGeneratorServiceClient keyGeneratorServiceClient;
 
@@ -38,7 +38,7 @@ public class PasteController {
 
     @PostMapping(path = "/save")
     public ResponseEntity<ObjectNode> savePaste(@RequestBody Paste paste, HttpServletRequest request) {
-        LOGGER.info("inside save paste endpoint");
+        log.info("inside save paste endpoint");
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode jsonData = objectMapper.createObjectNode();
         String key = "";
@@ -69,7 +69,7 @@ public class PasteController {
 
     @PutMapping(path = "/{key}")
     public ResponseEntity<String> updatePaste(@PathVariable String key, @RequestBody Map<String, Object> jsonData) {
-        LOGGER.info("inside update paste endpoint");
+        log.info("inside update paste endpoint");
         Optional<Paste> p = pasteServices.isPresent(key);
         if (p.isEmpty()) {
             return ResponseEntity.status(404).body("paste not found");
@@ -88,7 +88,7 @@ public class PasteController {
 
     @GetMapping(path = "/{key}")
     public Paste getPaste(@PathVariable String key) {
-        LOGGER.info("inside get endpoint");
+        log.info("inside get endpoint");
         Optional<Paste> p = pasteServices.getPaste(key);
         return p.orElse(null);
     }
